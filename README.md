@@ -1,56 +1,98 @@
-# RDR2-Mont-Carlo-Simulator
+# 🎯 Questão – Simulação de Finais em *Red Dead Redemption 2* com Método de Monte Carlo
 
- ## 🎯 Questão – Método de Monte Carlo aplicado aos finais de Red Dead Redemption 2
-### No jogo Red Dead Redemption 2, o protagonista Arthur Morgan tem destinos diferentes ao final da campanha, dependendo das decisões tomadas pelo jogador e do nível de honra atingido ao longo da história. Apesar de todos os finais levarem à morte de Arthur, o modo como ele morre varia significativamente, refletindo suas escolhas morais e ações finais.
+No jogo *Red Dead Redemption 2*, o personagem Arthur Morgan sempre morre no final da história principal. Porém, a forma como ele morre depende de duas variáveis principais:
 
-Considere os seguintes 4 finais principais:
+- O nível de **honra** do jogador (alta ou baixa).
+- A **escolha final** de Arthur: ajudar John Marston a fugir ou voltar para buscar o dinheiro.
 
-- Final A – Redenção: Arthur tem honra alta e ajuda John a fugir. Ele morre de forma serena, vendo o nascer do sol, depois de garantir a fuga do amigo.
+Além disso, existe uma **cutscene secreta e emocional**, em que Arthur se **despede do cavalo antes de morrer**. Essa cena **só é exibida se**:
 
-- Final B – Ganância Honrada: Arthur tem honra alta e decide voltar para pegar o dinheiro. Morre em luta contra Micah, com alguma dignidade, mas ainda motivado pela ganância.
+1. O jogador tiver **honra alta**.
+2. O cavalo atual estiver com **afinidade no nível máximo (vínculo 4)**.
 
-- Final C – Sacrifício Brutal: Arthur tem honra baixa, mas ainda assim decide ajudar John a escapar. Morre espancado por Micah, sem compaixão.
+---
 
-- Final D – Derrota Total: Arthur tem honra baixa e escolhe voltar pelo dinheiro. Micah o esfaqueia brutalmente, sendo o final mais trágico e sem redenção.
+## 🧱 Os finais possíveis são:
 
-Com base em dados coletados de 10.000 jogadores:
+- **Final A – Redenção:** Honra alta + ajudar John.  
+  Arthur morre em paz vendo o nascer do sol.  
+  ✅ Pode conter a *cutscene* do cavalo.
 
-- 40% dos jogadores terminam o jogo com honra alta, e 60% com honra baixa.
+- **Final B – Ganância Honrada:** Honra alta + buscar o dinheiro.  
+  Arthur morre lutando contra Micah.  
+  ✅ Pode conter a *cutscene* do cavalo.
 
-Entre os jogadores com honra alta:
+- **Final C – Sacrifício Brutal:** Honra baixa + ajudar John.  
+  Arthur é espancado até a morte por Micah.  
+  ❌ Sem *cutscene* do cavalo.
 
-- 85% ajudam John (Final A)
+- **Final D – Derrota Total:** Honra baixa + buscar o dinheiro.  
+  Arthur é esfaqueado por Micah.  
+  ❌ Sem *cutscene* do cavalo.
 
-- 15% vão atrás do dinheiro (Final B)
+---
 
-Entre os jogadores com honra baixa:
+## 📊 Dados de 10.000 jogadores:
 
-- 35% ajudam John (Final C)
+- 40% terminaram com **honra alta**, 60% com **honra baixa**.
 
-- 65% vão atrás do dinheiro (Final D)
+Entre os jogadores com **honra alta**:
+- 85% ajudaram John → **Final A**
+- 15% buscaram o dinheiro → **Final B**
 
-Pergunta:
-### Utilizando o método de Monte Carlo, simule (ou descreva como simular) o processo para estimar a probabilidade de cada final acontecer. Após a simulação com 10.000 execuções, determine:
+Entre os jogadores com **honra baixa**:
+- 35% ajudaram John → **Final C**
+- 65% buscaram o dinheiro → **Final D**
 
-A probabilidade estimada de cada final.
+Dos jogadores com **honra alta**, estima-se que **70% têm afinidade máxima com o cavalo** no final.
 
-Qual final é o mais comum entre os jogadores, segundo os dados.
+---
 
-✅ Gabarito esperado (resumo da resolução):
-Simulação Monte Carlo: repetir 10.000 vezes o processo de:
+## ❓ Perguntas:
 
-Sortear se o jogador termina com honra alta (40%) ou baixa (60%).
+Com base nesses dados e utilizando o **método de Monte Carlo** com **10.000 simulações**:
 
-Com base nisso, sortear a decisão final do Arthur.
+1. Qual é a **probabilidade estimada de ocorrência** de cada final?
+2. Qual é o **final mais comum** entre os jogadores?
+3. Qual é a **probabilidade de o jogador ver a *cutscene* da despedida do cavalo?**
+4. Descreva, **passo a passo**, como a simulação de Monte Carlo poderia ser implementada para estimar esses resultados.
 
-Cálculo esperado:
+---
 
-- Final A – Redenção: 40% * 85% = 34%
+## ✅ Gabarito Esperado
 
-- Final B – Ganância Honrada: 40% * 15% = 6%
+### 📌 Probabilidades dos finais:
 
-- Final C – Sacrifício Brutal: 60% * 35% = 21%
+- **Final A:** 40% × 85% = **34%**
+- **Final B:** 40% × 15% = **6%**
+- **Final C:** 60% × 35% = **21%**
+- **Final D:** 60% × 65% = **39%**
 
-- Final D – Derrota Total: 60% * 65% = 39%
+🔺 **Final mais comum:** Final D – Derrota Total (**39%**)
 
-- ➡️ Final mais provável: Final D – Derrota Total com 39% de chance.
+---
+
+### 🐴 Probabilidade da *cutscene* do cavalo:
+
+Somente pode ocorrer nos finais A e B, **e apenas se houver afinidade máxima (70%)**:
+
+- (Final A + Final B) = 34% + 6% = **40%**
+- *Cutscene* = 40% × 70% = **28%**
+
+✅ **Resposta:** 28% dos jogadores presenciam a despedida do cavalo.
+
+---
+
+## 🛠️ Etapas da Simulação (Monte Carlo):
+
+1. Repetir o experimento **10.000 vezes**.
+2. Para cada simulação:
+   - Sortear se o jogador tem **honra alta (40%)** ou **baixa (60%)**.
+   - Se **honra alta**:
+     - Sortear entre Final A (85%) ou Final B (15%).
+     - Sortear se tem **afinidade máxima com o cavalo (70%)** – relevante para a *cutscene*.
+   - Se **honra baixa**:
+     - Sortear entre Final C (35%) ou Final D (65%) – sem chance de *cutscene*.
+3. Contar quantas vezes **cada final** ocorreu.
+4. Contar quantas vezes a ***cutscene* do cavalo** apareceu.
+5. Dividir os resultados pelo total de simulações (**10.000**) para obter as probabilidades.
